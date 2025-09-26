@@ -1,0 +1,25 @@
+{
+  "id": 566629,
+  "name": "Kafka Consumer Lag",
+  "type": "query alert",
+  "query": "min(last_7m):min:kafka_consumergroup_lag_sum{!consumergroup:cli*} by {kube_namespace,topic,consumergroup} > 1000",
+  "message": "The lag for Kafka consumer group {{consumergroup.name}} has exceeded ideal levels for topic {{topic.name}} in {{kube_namespace.name}} \n{{#is_warning}}\n@teams-NotificationsAlerts \n{{/is_warning}} \n{{#is_alert}}\n@pagerduty-Platform_Team_Service \n{{/is_alert}} \n{{#is_recovery}}\n@teams-NotificationsAlerts @pagerduty-Platform_Team_Service \n{{/is_recovery}} @oncall-platform-infrastructure-team",
+  "tags": [
+    "team:platform-infrastructure-team"
+  ],
+  "options": {
+    "thresholds": {
+      "critical": 1000,
+      "warning": 500
+    },
+    "notify_audit": false,
+    "include_tags": false,
+    "notify_by": [
+      "*"
+    ],
+    "new_group_delay": 60,
+    "notification_preset_name": "hide_all",
+    "on_missing_data": "default"
+  },
+  "priority": null
+}

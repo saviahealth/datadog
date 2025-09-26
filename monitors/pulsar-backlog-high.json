@@ -1,0 +1,21 @@
+{
+  "id": 566632,
+  "name": "Pulsar Backlog High",
+  "type": "query alert",
+  "query": "min(last_15m):sum:pulsar.subscription_back_log{NOT subscription:_compaction AND NOT subscription:*reader* AND (namespace:clinical-apps/* OR namespace:inbound/clinical-events) AND NOT subscription:*-dlt AND NOT subscription:*-DLT} by {subscription} > 1000",
+  "message": "The total Pulsar subscription backlog for namespace {{namespace.name}} is higher than expected.\n{{#is_warning}}@teams-NotificationsAlerts{{/is_warning}} \n{{#is_alert}}@pagerduty-Platform_Team_Service @teams-NotificationsAlerts {{/is_alert}} \n{{#is_recovery}}\n@teams-NotificationsAlerts  @pagerduty-Platform_Team_Service \n{{/is_recovery}} @oncall-platform-infrastructure-team",
+  "tags": [
+    "team:platform-infrastructure-team"
+  ],
+  "options": {
+    "thresholds": {
+      "critical": 1000,
+      "warning": 500
+    },
+    "notify_audit": false,
+    "include_tags": true,
+    "new_group_delay": 60,
+    "on_missing_data": "show_no_data"
+  },
+  "priority": null
+}

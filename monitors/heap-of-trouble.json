@@ -1,0 +1,21 @@
+{
+  "id": 624555,
+  "name": "Heap of Trouble",
+  "type": "query alert",
+  "query": "avg(last_5m):avg:jvm_memory_used_bytes{area:heap, kube_container_name:abd-apps-server*} by {kube_namespace,pod_name} * 100 / avg:jvm_memory_max_bytes{area:heap, kube_container_name:abd-apps-server*} by {kube_namespace,pod_name} > 97",
+  "message": "Heap memory exhausted in {{kube_replica_set.name}} or {{kube_stateful_set.name}} in {{kube_namespace.name}} @teams-NotificationsAlerts",
+  "tags": [
+    "team:platform-infrastructure-team"
+  ],
+  "options": {
+    "thresholds": {
+      "critical": 97
+    },
+    "notify_audit": false,
+    "include_tags": true,
+    "new_group_delay": 60,
+    "notify_no_data": false,
+    "timeout_h": 1
+  },
+  "priority": null
+}

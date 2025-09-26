@@ -1,0 +1,23 @@
+{
+  "id": 566252,
+  "name": "Replication Slot Inactive",
+  "type": "query alert",
+  "query": "avg(last_5m):max:saviadb.replication_slot.active{slot_type:logical} by {database_instance,slot_name} < 0.5",
+  "message": "The replication slot {{slot_name.name}} is inactive on database host {{database_instance.name}} @teams-NotificationsAlerts @pagerduty-Platform_Team_Service @oncall-platform-infrastructure-team",
+  "tags": [
+    "team:platform-infrastructure-team"
+  ],
+  "options": {
+    "thresholds": {
+      "critical": 0.5
+    },
+    "notify_audit": false,
+    "include_tags": false,
+    "new_group_delay": 60,
+    "renotify_interval": 0,
+    "escalation_message": "",
+    "notification_preset_name": "hide_all",
+    "on_missing_data": "default"
+  },
+  "priority": null
+}

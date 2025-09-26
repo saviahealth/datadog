@@ -1,0 +1,27 @@
+{
+  "id": 566303,
+  "name": "Database is down",
+  "type": "service check",
+  "query": "\"postgres.can_connect\".over(\"*\").by(\"host\").last(4).count_by_status()",
+  "message": "Database {{host.name}} appears to be unavailable @teams-NotificationsAlerts @pagerduty-Platform_Team_Service @oncall-platform-infrastructure-team",
+  "tags": [
+    "team:platform-infrastructure-team"
+  ],
+  "options": {
+    "thresholds": {
+      "critical": 3,
+      "warning": 1,
+      "ok": 1
+    },
+    "notify_audit": false,
+    "notify_no_data": false,
+    "renotify_interval": 0,
+    "timeout_h": 0,
+    "threshold_windows": null,
+    "include_tags": true,
+    "new_group_delay": 60,
+    "notification_preset_name": "hide_all",
+    "escalation_message": ""
+  },
+  "priority": null
+}

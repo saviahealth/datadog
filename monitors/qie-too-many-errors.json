@@ -1,0 +1,20 @@
+{
+  "id": 873929,
+  "name": "QIE Too Many Errors",
+  "type": "query alert",
+  "query": "avg(last_5m):max:qie.channel.errors{!channel.name:*location* , !channel.name:*lbh* , !channel.name:peaks-v2} by {channel.name} > 200",
+  "message": "The qie error backlog for {{[channel.name].name}} has exceeded 200 and needs to be resolved manually.\n@teams-NotificationsAlerts @pagerduty-Platform_Team_Service @oncall-platform-infrastructure-team",
+  "tags": [
+    "team:platform-infrastructure-team"
+  ],
+  "options": {
+    "thresholds": {
+      "critical": 200
+    },
+    "notify_audit": false,
+    "on_missing_data": "default",
+    "include_tags": true,
+    "new_group_delay": 60
+  },
+  "priority": null
+}

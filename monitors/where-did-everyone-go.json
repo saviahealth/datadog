@@ -1,0 +1,50 @@
+{
+  "id": 6837124,
+  "name": "Where Did Everybody Go",
+  "type": "log alert",
+  "query": "formula(\"default_zero(throughput(query))\").last(\"5m\") == 0",
+  "message": "Inbound data on {{@channelName.name}} appears to have stopped.\n@oncall-platform-infrastructure-team @teams-NotificationsAlerts",
+  "tags": [
+    "team:platform-infrastructure-team"
+  ],
+  "options": {
+    "thresholds": {
+      "critical": 0
+    },
+    "enable_logs_sample": true,
+    "notify_audit": false,
+    "on_missing_data": "show_and_notify_no_data",
+    "include_tags": true,
+    "variables": [
+      {
+        "name": "query",
+        "data_source": "logs",
+        "search": {
+          "query": "kube_namespace:integration environment:prd @channelName:*HL7* \"message processed\""
+        },
+        "indexes": [
+          "*"
+        ],
+        "group_by": [
+          {
+            "facet": "@channelName",
+            "limit": 10,
+            "sort": {
+              "aggregation": "count",
+              "order": "desc",
+              "metric": "count"
+            },
+            "should_exclude_missing": true
+          }
+        ],
+        "compute": {
+          "aggregation": "count"
+        },
+        "storage": "hot"
+      }
+    ],
+    "new_host_delay": 300,
+    "groupby_simple_monitor": false
+  },
+  "priority": null
+}

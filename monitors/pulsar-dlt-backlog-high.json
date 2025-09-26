@@ -1,0 +1,21 @@
+{
+  "id": 615660,
+  "name": "Pulsar DLT Backlog High",
+  "type": "query alert",
+  "query": "min(last_5m):sum:pulsar.subscription_back_log{subscription:*-dlt OR subscription:*-DLT} by {namespace,subscription} > 1000",
+  "message": "The Pulsar dead-letter subscription backlog for namespace {{subscription.name}} is higher than expected.",
+  "tags": [
+    "team:platform-infrastructure-team"
+  ],
+  "options": {
+    "thresholds": {
+      "critical": 1000,
+      "warning": 10
+    },
+    "notify_audit": false,
+    "include_tags": true,
+    "new_group_delay": 60,
+    "notify_no_data": false
+  },
+  "priority": null
+}

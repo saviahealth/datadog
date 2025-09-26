@@ -1,0 +1,21 @@
+{
+  "id": 661888,
+  "name": "In-n-Out Burger: Model Persisted Events",
+  "type": "query alert",
+  "query": "avg(last_5m):abs((diff(sum:pulsar.out_messages_total{topic:*/abd_db.art.model_persisted_event_journal} by {namespace}) / max:pulsar.subscriptions_count{topic:*/abd_db.art.model_persisted_event_journal} by {namespace}) - diff(sum:pulsar.in_messages_total{topic:*/abd_db.art.model_persisted_event_journal} by {namespace})) > 4000",
+  "message": "Pulsar message rate in and rate out do not match for the abd_db.model_persisted_event_journal topic in namespace {{namespace.name}}.\n\nIf message out rate exceeds message in rate you may want to look for excessive retries due to message failures.\n\nIf message in rate exceeds message out rate you may want to verify that consumers are still connected and receiving messages.\n\n@pagerduty-Platform_Team_Service\n@teams-NotificationsAlerts",
+  "tags": [
+    "team:platform-infrastructure-team"
+  ],
+  "options": {
+    "thresholds": {
+      "critical": 4000
+    },
+    "notify_audit": false,
+    "include_tags": false,
+    "new_group_delay": 60,
+    "require_full_window": true,
+    "notify_no_data": false
+  },
+  "priority": null
+}

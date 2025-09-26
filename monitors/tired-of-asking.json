@@ -1,0 +1,22 @@
+{
+  "id": 8643971,
+  "name": "Tired of Asking",
+  "type": "log alert",
+  "query": "logs(\"\\\"akka.pattern.AskTimeoutException:\\\"\").index(\"*\").rollup(\"count\").by(\"pod_name,kube_namespace\").last(\"5m\") > 5",
+  "message": "Triggering Akka AskTikmeOutExceptions in {{kube_namespace.name}}/{{pod_name.name}}. Please restart service.\n@teams-NotificationsAlerts\n@oncall-platform-infrastructure-team",
+  "tags": [
+    "team:platform-infrastructure-team"
+  ],
+  "options": {
+    "thresholds": {
+      "critical": 5
+    },
+    "enable_logs_sample": false,
+    "notify_audit": false,
+    "on_missing_data": "default",
+    "include_tags": true,
+    "new_group_delay": 60,
+    "groupby_simple_monitor": false
+  },
+  "priority": null
+}

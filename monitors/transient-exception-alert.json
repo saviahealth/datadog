@@ -1,0 +1,21 @@
+{
+  "id": 837725,
+  "name": "Transient Exception Alert",
+  "type": "query alert",
+  "query": "sum(last_5m):min:savia.transientPipelineErrors{*} by {kube_namespace,service}.as_count().fill(zero) > 1000",
+  "message": "Transient exceptions are occurring in {{service.name}} in the {{kube_namespace.name}} namespace. Ignoring this can cause missed data and/or excessive log usage.\n@teams-NotificationsAlerts @oncall-platform-infrastructure-team",
+  "tags": [
+    "team:platform-infrastructure-team"
+  ],
+  "options": {
+    "thresholds": {
+      "critical": 1000,
+      "warning": 500
+    },
+    "notify_audit": false,
+    "on_missing_data": "resolve",
+    "include_tags": true,
+    "new_group_delay": 60
+  },
+  "priority": null
+}

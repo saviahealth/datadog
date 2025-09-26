@@ -1,0 +1,21 @@
+{
+  "id": 1705937,
+  "name": "QIE Unresolved Errors",
+  "type": "query alert",
+  "query": "min(last_30m):min:qie.channel.errors{!channel.name:*location* , !channel.name:*lbh* , !channel.name:peaks-v2 , !channel.name:metrics} by {channel.name} > 199",
+  "message": "The qie error backlog for {{[channel.name].name}} has unresolved errors and needs to be resolved manually.\n@teams-NotificationsAlerts @pagerduty-Platform_Team_Service @oncall-platform-infrastructure-team",
+  "tags": [
+    "team:platform-infrastructure-team"
+  ],
+  "options": {
+    "thresholds": {
+      "critical": 199,
+      "warning": 50
+    },
+    "notify_audit": false,
+    "on_missing_data": "default",
+    "include_tags": true,
+    "new_group_delay": 60
+  },
+  "priority": null
+}

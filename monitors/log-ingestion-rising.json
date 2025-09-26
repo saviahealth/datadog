@@ -1,0 +1,20 @@
+{
+  "id": 688178,
+  "name": "Log Ingestion On the Rise",
+  "type": "query alert",
+  "query": "change(avg(last_1h),last_1d):sum:datadog.estimated_usage.logs.ingested_bytes{*} > 200000000",
+  "message": "Log ingestion has increase by more than 10GB since the same time the previous day. @teams-NotificationsAlerts",
+  "tags": [
+    "team:platform-infrastructure-team"
+  ],
+  "options": {
+    "thresholds": {
+      "critical": 200000000
+    },
+    "notify_audit": false,
+    "include_tags": false,
+    "notify_no_data": false,
+    "new_host_delay": 300
+  },
+  "priority": null
+}

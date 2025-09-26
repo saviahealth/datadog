@@ -1,0 +1,21 @@
+{
+  "id": 871381,
+  "name": "Ponderous Pod {{kube_namespace.name}} - {{pod_name.name}}",
+  "type": "query alert",
+  "query": "change(max(last_1h),last_5m):max:kubernetes.containers.restarts{*} by {kube_namespace,pod_name} > 10",
+  "message": "Pod {{pod_name.name}} in namespace {{kube_namespace.name}} has been doing a lot of restarting.\n@teams-NotificationsAlerts",
+  "tags": [
+    "team:platform-infrastructure-team"
+  ],
+  "options": {
+    "thresholds": {
+      "critical": 10,
+      "warning": 5
+    },
+    "notify_audit": false,
+    "on_missing_data": "resolve",
+    "include_tags": true,
+    "new_group_delay": 60
+  },
+  "priority": null
+}

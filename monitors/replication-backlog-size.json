@@ -1,0 +1,21 @@
+{
+  "id": 566326,
+  "name": "Replication Backlog Size",
+  "type": "query alert",
+  "query": "avg(last_5m):avg:saviadb.replication_slot.backlog_size{*} by {database_instance,slot_name} > 50000000000",
+  "message": "{{#is_warning}}\nReplication backlog for {{slot_name.name}} on {{database_instance.name}} is higher than it should be. @teams-NotificationsAlerts \n{{/is_warning}} \n{{#is_alert}}\nReplication backlog for {{slot_name.name}} on {{database_instance.name}} has exceeded tolerable size. Please address. @pagerduty-Platform_Team_Service @teams-NotificationsAlerts \n{{/is_alert}} \n{{#is_recovery}}\nReplication backlog for {{slot_name.name}} on {{database_instance.name}} is recovered. @pagerduty-Platform_Team_Service  @teams-NotificationsAlerts \n{{/is_recovery}}",
+  "tags": [
+    "team:platform-infrastructure-team"
+  ],
+  "options": {
+    "thresholds": {
+      "critical": 50000000000,
+      "warning": 20000000000
+    },
+    "notify_audit": false,
+    "include_tags": true,
+    "new_group_delay": 60,
+    "notify_no_data": false
+  },
+  "priority": null
+}

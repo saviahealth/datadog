@@ -1,0 +1,22 @@
+{
+  "id": 566630,
+  "name": "Excessive Database Growth",
+  "type": "query alert",
+  "query": "change(avg(last_4h),last_1h):avg:azure.dbforpostgresql_flexibleservers.storage_percent{*} by {database_instance} > 5",
+  "message": "{{database_instance.name}} is experiencing unusually high growth. @teams-NotificationsAlerts",
+  "tags": [
+    "team:platform-infrastructure-team"
+  ],
+  "options": {
+    "thresholds": {
+      "critical": 5,
+      "warning": 3
+    },
+    "notify_audit": false,
+    "include_tags": true,
+    "evaluation_delay": 300,
+    "new_group_delay": 60,
+    "notify_no_data": false
+  },
+  "priority": null
+}

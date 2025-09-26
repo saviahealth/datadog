@@ -1,0 +1,21 @@
+{
+  "id": 831306,
+  "name": "Analytics DB Stroage Alert",
+  "type": "query alert",
+  "query": "avg(last_1h):avg:azure.dbforpostgresql_flexibleservers.storage_percent{database_instance:savia-analytics-psql-ihc-database-prd-9f41.postgres.database.azure.com} > 85",
+  "message": "The storage for savia-analytics database has exceeded 70% -- check qvera usage etc.\n@pagerduty-Platform_Team_Service  @teams-NotificationsAlerts",
+  "tags": [
+    "team:platform-infrastructure-team"
+  ],
+  "options": {
+    "thresholds": {
+      "critical": 85
+    },
+    "notify_audit": false,
+    "on_missing_data": "default",
+    "include_tags": false,
+    "evaluation_delay": 300,
+    "new_host_delay": 300
+  },
+  "priority": null
+}

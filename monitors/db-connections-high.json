@@ -1,0 +1,22 @@
+{
+  "id": 780435,
+  "name": "DB Connections High for {{database_instance.name}}",
+  "type": "query alert",
+  "query": "avg(last_15m):avg:postgresql.connections{*} by {database_instance} * 100 / max:postgresql.max_connections{*} by {database_instance} > 90",
+  "message": "Number of database connections higher than expected for database {{database_instance.name}}\n\nConsider reviewing connected cleints (SELECT client_addr, count(datid) FROM pg_stat_activity group by client_addr order by 2 desc) or adding a network monitor to analyze traffic.\n\n{{#is_warning}}@teams-NotificationsAlerts {{/is_warning}}\n{{#is_alert}}@pagerduty-Platform_Team_Service  @teams-NotificationsAlerts {{/is_alert}}\n{{#is_recovery}}@teams-NotificationsAlerts  @pagerduty-Platform_Team_Service {{/is_recovery}}",
+  "tags": [
+    "team:platform-infrastructure-team"
+  ],
+  "options": {
+    "thresholds": {
+      "critical": 90,
+      "warning": 75
+    },
+    "notify_audit": false,
+    "on_missing_data": "show_no_data",
+    "include_tags": true,
+    "evaluation_delay": 300,
+    "new_group_delay": 60
+  },
+  "priority": null
+}

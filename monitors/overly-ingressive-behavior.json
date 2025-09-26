@@ -1,0 +1,21 @@
+{
+  "id": 8554315,
+  "name": "Overly Ingressive Behavior in {{kube_namespace.name}}",
+  "type": "query alert",
+  "query": "sum(last_5m):sum:savia.event.received{container_name:pubsub-ingress-service} by {client,kube_namespace}.as_count() > 2500",
+  "message": "{{client.name}} ingress rates in namespace {{kube_namespace.name}} are well above normal. You may want to monitor for growing backlogs.\nTIP: MESSAGING_PULSAR_CONSUMER_IGNOREMESSAGEKEYS environment variable can be used in older fhir-ingress pipelines to skip messages.\nNotify: @teams-NotificationsAlerts \n{{#is_alert}}@oncall-platform-infrastructure-team {{/is_alert}}\n{{#is_alert_recovery}}@oncall-platform-infrastructure-team {{/is_alert_recovery}}",
+  "tags": [
+    "team:platform-infrastructure-team"
+  ],
+  "options": {
+    "thresholds": {
+      "critical": 2500,
+      "warning": 1250
+    },
+    "notify_audit": false,
+    "on_missing_data": "default",
+    "include_tags": true,
+    "new_group_delay": 60
+  },
+  "priority": null
+}
